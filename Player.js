@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx,skin,controls,enemy01) {
+  constructor(ctx,skin,controls,enemy01,enemy02) {
     this.ctx=ctx;
     this.controls = controls;
     this.player=new Image();
@@ -15,7 +15,7 @@ class Player {
     this.shotInterval = 40;
     this.shotCountdown = 0;
     this.keepShooting = false;
-    this.actualEnemy=enemy01;
+    this.actualEnemy=enemy02;
   }
 
   manage() {

@@ -24,13 +24,17 @@ let skinSelected = playerSkins.blue;
 
 const gameStatus = new GameStatus(ctx);
 const enemy01 = new Enemy01(ctx);
-const player = new Player(ctx, skinSelected, controls, enemy01);
+const enemy02 = new Enemy02(ctx);
+const player = new Player(ctx,skinSelected,controls,enemy01,enemy02);
 
 function Game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.canvas.style.background = '#000';
 
   player.draw();
+  // enemy01.draw();
+  enemy02.draw();
+
   gameStatus.draw();
   gameStatus.showLifes(playerLifes);
   gameStatus.showScore(score);
@@ -41,7 +45,6 @@ function Game() {
     playerLifes--;
   }
 
-  enemy01.draw();
   requestAnimationFrame(Game);
 }
 
