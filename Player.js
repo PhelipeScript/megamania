@@ -1,19 +1,51 @@
 class Player {
-  constructor(ctx,skin,controls) {
+  constructor(ctx,skin,controls,enemy01) {
     this.ctx=ctx;
     this.controls = controls;
     this.player=new Image();
     this.player.src=skin;
     this.width=30;
     this.height=40;
-    this.posX=this.ctx.canvas.width/2 - this.width/2;
+    this.inicialPosX=this.ctx.canvas.width/2 - this.width/2;
+    this.posX=this.inicialPosX;
     this.posY=390;
     this.vel = 5;
     this.shots=[];
-    this.shotVel = 7;
-    this.shotInterval = 50;
+    this.shotVel = 9;
+    this.shotInterval = 40;
     this.shotCountdown = 0;
     this.keepShooting = false;
+    this.actualEnemy=enemy01;
+  }
+
+  manage() {
+    window.addEventListener('keydown', (keyboard) => {
+      if (keyboard.keyCode === 37) {
+        this.controls.left = true;
+      } else if (keyboard.keyCode === 39) {
+        this.controls.right = true;
+      } else if (keyboard.keyCode === 32) {
+        this.keepShooting = true;
+      }
+    })
+
+    window.addEventListener('keyup', (keyboard) => {
+      if (keyboard.keyCode === 37) {
+        this.controls.left = false;
+      } else if (keyboard.keyCode === 39) {
+        this.controls.right = false;
+      } else if (keyboard.keyCode === 32) {
+        this.keepShooting = false;
+      }
+    })
+
+    if (this.controls.left) {
+      if(this.posX > 10) 
+        this.posX-=this.vel;
+    } else if (this.controls.right) {
+      if(this.posX < this.ctx.canvas.width-this.width-10)
+        this.posX+=this.vel;
+    }
   }
 
   createShot() {
@@ -48,33 +80,39 @@ class Player {
     }
   }
 
-  manage() {
-    window.addEventListener('keydown', (keyboard) => {
-      if (keyboard.keyCode === 37) {
-        this.controls.left = true;
-      } else if (keyboard.keyCode === 39) {
-        this.controls.right = true;
-      } else if (keyboard.keyCode === 32) {
-        this.keepShooting = true;
+  enemyCaught() {
+    for (let i = 0; i < this.shots.length; i++) {
+      for (let j = 0; j < this.actualEnemy.enemies.length; j++) {
+        if (
+          (this.shots[i].y[1]>=this.actualEnemy.enemies[j].y&&this.shots[i].y[1]<=this.actualEnemy.enemies[j].y+this.actualEnemy.height)&&
+          (this.shots[i].x>=this.actualEnemy.enemies[j].x&&this.shots[i].x<=this.actualEnemy.enemies[j].x+this.actualEnemy.width)
+        ) {
+          this.actualEnemy.enemies.splice(j,1);
+          score+=this.actualEnemy.enemyValue;
+          setTimeout(() => {
+            this.shots.splice(i,1);
+            this.shotCountdown=0;
+          }, 5)
+        }
       }
-    })
+    }
+  }
 
-    window.addEventListener('keyup', (keyboard) => {
-      if (keyboard.keyCode === 37) {
-        this.controls.left = false;
-      } else if (keyboard.keyCode === 39) {
-        this.controls.right = false;
-      } else if (keyboard.keyCode === 32) {
-        this.keepShooting = false;
+  playerCaught() {
+    for (let i = 0; i < this.actualEnemy.shots.length; i++) {
+      if (
+        (this.actualEnemy.shots[i].y[1]>=this.posY&&this.actualEnemy.shots[i].y[1]<=this.posY+this.height)&&
+        (this.actualEnemy.shots[i].x>=this.posX&&this.actualEnemy.shots[i].x<=this.posX+this.width)
+      ) {
+        if (playerLifes >= 0) {
+          playerLifes--;
+        }
+        setTimeout(() => {
+          this.actualEnemy.shots.splice(i,1);
+          this.actualEnemy.reset();
+          this.posX=this.inicialPosX;
+        }, 10)
       }
-    })
-
-    if (this.controls.left) {
-      if(this.posX > 10) 
-        this.posX-=this.vel;
-    } else if (this.controls.right) {
-      if(this.posX < this.ctx.canvas.width-this.width-10)
-        this.posX+=this.vel;
     }
   }
 
@@ -83,5 +121,7 @@ class Player {
     this.manage();
     this.createShot();
     this.showShots();
+    this.enemyCaught();
+    this.playerCaught();
   }
 }
