@@ -8,7 +8,7 @@ class Enemy01 {
     this.height=20;
     this.enemies=[];
     this.enemiesCreated=false;
-    this.vel=5;
+    this.vel=3;
     this.shots=[];
     this.shotVel=4;
     this.shotInterval=150;

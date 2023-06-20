@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx,skin,controls,actualEnemy) {
+  constructor(ctx,skin,controls) {
     this.ctx=ctx;
     this.controls = controls;
     this.player=new Image();
@@ -15,7 +15,6 @@ class Player {
     this.shotInterval = 40;
     this.shotCountdown = 0;
     this.keepShooting = false;
-    this.enemy=actualEnemy;
   }
 
   manage() {
@@ -84,13 +83,13 @@ class Player {
 
   enemyCaught() {
     for (let i = 0; i < this.shots.length; i++) {
-      for (let j = 0; j < this.enemy.enemies.length; j++) {
+      for (let j = 0; j < actualEnemy.enemies.length; j++) {
         if (
-          (this.shots[i].y[1]>=this.enemy.enemies[j].y&&this.shots[i].y[1]<=this.enemy.enemies[j].y+this.enemy.height)&&
-          (this.shots[i].x>=this.enemy.enemies[j].x&&this.shots[i].x<=this.enemy.enemies[j].x+this.enemy.width)
+          (this.shots[i].y[1]>=actualEnemy.enemies[j].y&&this.shots[i].y[1]<=actualEnemy.enemies[j].y+actualEnemy.height)&&
+          (this.shots[i].x>=actualEnemy.enemies[j].x&&this.shots[i].x<=actualEnemy.enemies[j].x+actualEnemy.width)
         ) {
-          this.enemy.enemies.splice(j,1);
-          score+=this.enemy.enemyValue;
+          actualEnemy.enemies.splice(j,1);
+          score+=actualEnemy.enemyValue;
           setTimeout(() => {
             this.shots.splice(i,1);
             this.shotCountdown=0;
@@ -101,17 +100,17 @@ class Player {
   }
 
   playerCaught() {
-    for (let i = 0; i < this.enemy.shots.length; i++) {
+    for (let i = 0; i < actualEnemy.shots.length; i++) {
       if (
-        (this.enemy.shots[i].y[1]>=this.posY&&this.enemy.shots[i].y[1]<=this.posY+this.height)&&
-        (this.enemy.shots[i].x>=this.posX&&this.enemy.shots[i].x<=this.posX+this.width)
+        (actualEnemy.shots[i].y[1]>=this.posY&&actualEnemy.shots[i].y[1]<=this.posY+this.height)&&
+        (actualEnemy.shots[i].x>=this.posX&&actualEnemy.shots[i].x<=this.posX+this.width)
       ) {
         if (playerLifes >= 0) {
           playerLifes--;
         }
         setTimeout(() => {
-          this.enemy.shots.splice(i,1);
-          this.enemy.reset();
+          actualEnemy.shots.splice(i,1);
+          actualEnemy.reset();
           this.posX=this.inicialPosX;
         }, 10)
       }

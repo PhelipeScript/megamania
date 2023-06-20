@@ -41,12 +41,16 @@ function Game() {
     enemy02.draw();
   }
 
+  if (enemy01.enemies.length === 0) {
+    actualEnemy = enemy02;
+  }
+
   gameStatus.draw();
   gameStatus.showLifes(playerLifes);
   gameStatus.showScore(score);
   gameStatus.energy(timer);
   if(timer < 320) {
-    timer += 0.15;
+    timer += 0.08;
   } else if (playerLifes >= 0) {
     playerLifes--;
   }
