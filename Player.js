@@ -1,21 +1,21 @@
 class Player {
-  constructor(ctx,skin,controls,enemy01,enemy02) {
+  constructor(ctx,skin,controls,actualEnemy) {
     this.ctx=ctx;
     this.controls = controls;
     this.player=new Image();
     this.player.src=skin;
-    this.width=30;
-    this.height=40;
+    this.width=25;
+    this.height=35;
     this.inicialPosX=this.ctx.canvas.width/2 - this.width/2;
     this.posX=this.inicialPosX;
-    this.posY=390;
-    this.vel = 5;
+    this.posY=305;
+    this.vel = 4;
     this.shots=[];
     this.shotVel = 9;
     this.shotInterval = 40;
     this.shotCountdown = 0;
     this.keepShooting = false;
-    this.actualEnemy=enemy02;
+    this.enemy=actualEnemy;
   }
 
   manage() {
@@ -64,9 +64,11 @@ class Player {
 
   showShots() {
     for (let i = 0; i < this.shots.length; i++) {
+      this.shots[i].x=this.posX+this.width/2; // keep it real like the original game 
+
       this.ctx.beginPath();
       this.ctx.strokeStyle = '#F00';
-      this.ctx.lineWidth = 2;
+      this.ctx.lineWidth = 3;
       this.ctx.moveTo(this.shots[i].x, this.shots[i].y[0]);
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
       this.ctx.stroke();
@@ -82,13 +84,13 @@ class Player {
 
   enemyCaught() {
     for (let i = 0; i < this.shots.length; i++) {
-      for (let j = 0; j < this.actualEnemy.enemies.length; j++) {
+      for (let j = 0; j < this.enemy.enemies.length; j++) {
         if (
-          (this.shots[i].y[1]>=this.actualEnemy.enemies[j].y&&this.shots[i].y[1]<=this.actualEnemy.enemies[j].y+this.actualEnemy.height)&&
-          (this.shots[i].x>=this.actualEnemy.enemies[j].x&&this.shots[i].x<=this.actualEnemy.enemies[j].x+this.actualEnemy.width)
+          (this.shots[i].y[1]>=this.enemy.enemies[j].y&&this.shots[i].y[1]<=this.enemy.enemies[j].y+this.enemy.height)&&
+          (this.shots[i].x>=this.enemy.enemies[j].x&&this.shots[i].x<=this.enemy.enemies[j].x+this.enemy.width)
         ) {
-          this.actualEnemy.enemies.splice(j,1);
-          score+=this.actualEnemy.enemyValue;
+          this.enemy.enemies.splice(j,1);
+          score+=this.enemy.enemyValue;
           setTimeout(() => {
             this.shots.splice(i,1);
             this.shotCountdown=0;
@@ -99,17 +101,17 @@ class Player {
   }
 
   playerCaught() {
-    for (let i = 0; i < this.actualEnemy.shots.length; i++) {
+    for (let i = 0; i < this.enemy.shots.length; i++) {
       if (
-        (this.actualEnemy.shots[i].y[1]>=this.posY&&this.actualEnemy.shots[i].y[1]<=this.posY+this.height)&&
-        (this.actualEnemy.shots[i].x>=this.posX&&this.actualEnemy.shots[i].x<=this.posX+this.width)
+        (this.enemy.shots[i].y[1]>=this.posY&&this.enemy.shots[i].y[1]<=this.posY+this.height)&&
+        (this.enemy.shots[i].x>=this.posX&&this.enemy.shots[i].x<=this.posX+this.width)
       ) {
         if (playerLifes >= 0) {
           playerLifes--;
         }
         setTimeout(() => {
-          this.actualEnemy.shots.splice(i,1);
-          this.actualEnemy.reset();
+          this.enemy.shots.splice(i,1);
+          this.enemy.reset();
           this.posX=this.inicialPosX;
         }, 10)
       }

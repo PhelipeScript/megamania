@@ -4,24 +4,24 @@ class Enemy01 {
     this.enemyValue=20;
     this.enemy=new Image();
     this.enemy.src = 'assets/enemy01.png';
-    this.width=40;
-    this.height=30;
+    this.width=35;
+    this.height=20;
     this.enemies=[];
     this.enemiesCreated=false;
     this.vel=5;
     this.shots=[];
     this.shotVel=4;
-    this.shotInterval=100;
+    this.shotInterval=150;
     this.shotCount=0;
    }
 
   createEnemies(x, y) {
     this.enemies.push({x: x,y: y,})
-    this.enemies.push({x: x-80,y: y+40,})
-    this.enemies.push({x: x,y: y+80,})
+    this.enemies.push({x: x-65,y: y+35,})
+    this.enemies.push({x: x,y: y+70,})
 
-    if (x > -10) {
-      this.createEnemies(x-160, y);
+    if (x > -620) {
+      this.createEnemies(x-130, y);
     } else {
       this.enemiesCreated=true;
     }
@@ -32,7 +32,7 @@ class Enemy01 {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
       
       if (this.enemies[i].x >= this.ctx.canvas.width) {
-        this.enemies[i].x = -110;
+        this.enemies[i].x = -10;
       } else {
         this.enemies[i].x+=this.vel;
       }
@@ -73,7 +73,7 @@ class Enemy01 {
       this.shots[i].y[0]+=this.shotVel;
       this.shots[i].y[1]+=this.shotVel;
 
-      if (this.shots[i].y[1] >= 440) {
+      if (this.shots[i].y[1] >= 370) {
         this.shots.splice(i, 1);
       }
     }
@@ -87,7 +87,7 @@ class Enemy01 {
 
   draw() {
     if(!this.enemiesCreated) {
-      this.createEnemies(950, 20);
+      this.createEnemies(-100, 20);
     }
     this.showEnemies();
     this.showShots();
