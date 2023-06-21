@@ -23,14 +23,12 @@ const playerSkins = {
 let skinSelected = playerSkins.blue;
 
 const gameStatus = new GameStatus(ctx);
-// const enemy01 = new Enemy01(ctx);
-// const enemy02 = new Enemy02(ctx);
-// const enemy03 = new Enemy03(ctx);
 
 const enemies = {
   0: new Enemy01(ctx),
   1: new Enemy02(ctx),
   2: new Enemy03(ctx),
+  3: new Enemy04(ctx),
 }
 let currentStage = 0;
 let actualEnemy = enemies[currentStage];
@@ -47,6 +45,7 @@ function Game() {
   if (actualEnemy.enemies.length === 0) {
     currentStage++;
     actualEnemy = enemies[currentStage];
+    timer = 0;
   }
 
   gameStatus.draw();
