@@ -103,7 +103,7 @@ class Player {
     for (let i = 0; i < actualEnemy.shots.length; i++) {
       if (
         (actualEnemy.shots[i].y[1]>=this.posY&&actualEnemy.shots[i].y[1]<=this.posY+this.height)&&
-        (actualEnemy.shots[i].x>=this.posX&&actualEnemy.shots[i].x<=this.posX+this.width)
+        (actualEnemy.shots[i].x>=this.posX&&actualEnemy.shots[i].x<=this.posX+this.width)         
       ) {
         if (playerLifes >= 0) {
           playerLifes--;
@@ -117,6 +117,29 @@ class Player {
     }
   }
 
+  playerCollision() {
+    for (let i = 0; i < actualEnemy.enemies.length; i++) {
+      if (
+        (
+          (actualEnemy.enemies[i].y>=this.posY&&actualEnemy.enemies[i].y<=this.posY+this.height) || 
+          (actualEnemy.enemies[i].y+actualEnemy.height>=this.posY&&actualEnemy.enemies[i].y+actualEnemy.height<=this.posY+this.height)
+        )&&
+        (
+          (actualEnemy.enemies[i].x>=this.posX&&actualEnemy.enemies[i].x<=this.posX+this.width) ||
+          (actualEnemy.enemies[i].x+actualEnemy.width>=this.posX&&actualEnemy.enemies[i].x+actualEnemy.width<=this.posX+this.width)
+        )
+      ) {
+        if (playerLifes >= 0) {
+          playerLifes--;
+          actualEnemy.reset();
+        }
+        setTimeout(() => {
+          this.posX=this.inicialPosX;
+        }, 10)
+      } 
+    }
+  }
+
   draw() {
     this.ctx.drawImage(this.player,this.posX,this.posY,this.width,this.height);
     this.manage();
@@ -124,5 +147,6 @@ class Player {
     this.showShots();
     this.enemyCaught();
     this.playerCaught();
+    this.playerCollision();
   }
 }

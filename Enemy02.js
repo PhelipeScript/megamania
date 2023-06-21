@@ -4,12 +4,12 @@ class Enemy02 {
     this.enemyValue=30;
     this.enemy=new Image();
     this.enemy.src='assets/enemy02.png';
-    this.width=30;
-    this.height=15;
+    this.width=35;
+    this.height=20;
     this.enemies=[];
     this.enemiesCreated=false;
     this.dirX=1;
-    this.vel=3;
+    this.vel=3.5;
     this.interval=170;
     this.countdown=this.interval;
     this.shots=[];
@@ -47,7 +47,7 @@ class Enemy02 {
         setTimeout(() => {
           if (this.enemies[j]) 
             this.enemies[j].y += 20;
-        }, 700)
+        }, 600)
       }
       this.countdown=this.interval;
     } else {
@@ -72,11 +72,11 @@ class Enemy02 {
   }
 
   createShot() {
-    let amount = this.enemies.length>=4 ? 2 : 3;
+    let amount = this.enemies.length>=3 ? 3 : 1;
     for (let i = 1; i <= amount; i++) {
       let random = Math.floor(Math.random()*this.enemies.length);
       setTimeout(() => {
-        if (this.enemies[random] && this.enemies[random].y >= 0 && this.enemies[random].y <= 450) {
+        if (this.enemies[random] && this.enemies[random].y >= 0 && this.enemies[random].y <= 250) {
           this.shots.push({
             x:this.enemies[random].x+this.width/2,
             y: [this.enemies[random].y+20, this.enemies[random].y+40]
@@ -112,7 +112,16 @@ class Enemy02 {
   }
 
   reset() {
-    
+    let enemyFurtherDown = -1;
+
+    for (let i = this.enemies.length-1; i >= 0; i--) {
+      if (this.enemies[i].y > enemyFurtherDown) 
+        enemyFurtherDown=this.enemies[i].y;
+    }
+
+    for (let i = this.enemies.length-1; i >= 0; i--) {
+      this.enemies[i].y += enemyFurtherDown <= 100 ? -100 : -enemyFurtherDown*1.25; 
+    }
   } 
 
   draw() {
