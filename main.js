@@ -23,9 +23,17 @@ const playerSkins = {
 let skinSelected = playerSkins.blue;
 
 const gameStatus = new GameStatus(ctx);
-const enemy01 = new Enemy01(ctx);
-const enemy02 = new Enemy02(ctx);
-let actualEnemy = enemy01;
+// const enemy01 = new Enemy01(ctx);
+// const enemy02 = new Enemy02(ctx);
+// const enemy03 = new Enemy03(ctx);
+
+const enemies = {
+  0: new Enemy01(ctx),
+  1: new Enemy02(ctx),
+  2: new Enemy03(ctx),
+}
+let currentStage = 0;
+let actualEnemy = enemies[currentStage];
 
 const player = new Player(ctx,skinSelected,controls,actualEnemy);
 
@@ -35,14 +43,10 @@ function Game() {
 
   player.draw();
   
-  if (actualEnemy === enemy01) {
-    enemy01.draw();
-  } else if (actualEnemy === enemy02) {
-    enemy02.draw();
-  }
-
-  if (enemy01.enemies.length === 0) {
-    actualEnemy = enemy02;
+  actualEnemy.draw();
+  if (actualEnemy.enemies.length === 0) {
+    currentStage++;
+    actualEnemy = enemies[currentStage];
   }
 
   gameStatus.draw();
