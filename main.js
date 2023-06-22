@@ -30,6 +30,7 @@ const enemies = {
   2: new Enemy03(ctx),
   3: new Enemy04(ctx),
   4: new Enemy05(ctx),
+  5: new Enemy06(ctx),
 }
 let currentStage = 0;
 let actualEnemy = enemies[currentStage];
