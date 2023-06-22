@@ -1,14 +1,17 @@
-class Enemy01 {
+class Enemy07 {
   constructor(ctx) {
     this.ctx=ctx;
     this.enemyValue=20;
     this.enemy=new Image();
-    this.enemy.src = 'assets/enemy01.png';
-    this.width=35;
-    this.height=20;
+    this.enemy.src = 'assets/enemy07.png';
+    this.width=25;
+    this.height=15;
     this.enemies=[];
     this.enemiesCreated=false;
-    this.vel=3;
+    this.velX=2.8;
+    this.velY=1.5;
+    this.dirY = 1;
+    this.dirYInterval= {current:0,max:70};
     this.shots=[];
     this.shotVel=4;
     this.shotInterval=150;
@@ -20,7 +23,7 @@ class Enemy01 {
     this.enemies.push({x: x-65,y: y+35,})
     this.enemies.push({x: x,y: y+70,})
 
-    if (this.enemies.length < 15) {
+    if (this.enemies.length<15) {
       this.createEnemies(x-130, y);
     } else {
       this.enemiesCreated=true;
@@ -28,14 +31,28 @@ class Enemy01 {
   }
 
   showEnemies() {
+    if (this.dirYInterval.current<=this.dirYInterval.max&&!this.stopMovX) {
+      this.dirYInterval.current++;
+    } else if (this.dirYInterval.current>this.dirYInterval.max) {
+      this.dirYInterval.current=0;
+      this.dirY *= -1;
+    }
+
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
       
+      this.enemies[i].y += this.velY*this.dirY;
+
       if (this.enemies[i].x >= this.ctx.canvas.width) {
         this.enemies[i].x = -10;
       } else {
-        this.enemies[i].x+=this.vel;
+      this.enemies[i].x+=this.velX;
       }
+
+      // if (this.enemies[i].y >= 250 || this.enemies[i].y <= 30) {
+      //   this.dirY *= -1;
+      // }
+      
     }
   }
 
@@ -87,7 +104,7 @@ class Enemy01 {
 
   draw() {
     if(!this.enemiesCreated) {
-      this.createEnemies(-500, 20);
+      this.createEnemies(-500, 45);
     }
     this.showEnemies();
     this.showShots();
