@@ -45,8 +45,8 @@ class Enemy07 {
 
       if (this.enemies[i].x >= this.ctx.canvas.width) {
         this.enemies[i].x = -10;
-      } else {
-      this.enemies[i].x+=this.velX;
+      } else if(!isResetting) {
+        this.enemies[i].x+=this.velX;
       }
 
       // if (this.enemies[i].y >= 250 || this.enemies[i].y <= 30) {

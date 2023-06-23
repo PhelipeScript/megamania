@@ -10,7 +10,7 @@ class Enemy06 {
     this.enemiesCreated=false;
     this.stopMovX=false;
     this.stopMovY=true;
-    this.velY=1.5;
+    this.velY=1.2;
     this.velX=3.5;
     this.dirX=1;
     this.dirXInterval= {current:0,max:50};
@@ -33,7 +33,7 @@ class Enemy06 {
   }
 
   showEnemies() {
-    if (this.dirXInterval.current<=this.dirXInterval.max&&!this.stopMovX) {
+    if (this.dirXInterval.current<=this.dirXInterval.max&&!this.stopMovX&&!isResetting) {
       this.dirXInterval.current++;
     } else if (this.dirXInterval.current>this.dirXInterval.max) {
       this.dirXInterval.current=0;
@@ -43,11 +43,11 @@ class Enemy06 {
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
       
-      if (!this.stopMovX) {
+      if (!this.stopMovX&&!isResetting) {
         this.enemies[i].x+=this.velX*this.dirX;
       }
       
-      if (!this.stopMovY) {
+      if (!this.stopMovY&&!isResetting) {
         this.enemies[i].y+=this.velY;
       }
 

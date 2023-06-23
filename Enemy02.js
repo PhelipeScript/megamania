@@ -40,7 +40,7 @@ class Enemy02 {
   }
 
   showEnemies() {
-    if (this.countdown <= 0) {
+    if (this.countdown <= 0 && !isResetting) {
       this.dirX *= -1;
       for (let j = 0; j < this.enemies.length; j++) {
         this.enemies[j].y += 30;
@@ -57,7 +57,8 @@ class Enemy02 {
     for (let i =0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
 
-      this.enemies[i].x+=this.vel*this.dirX;
+      if(!isResetting) 
+        this.enemies[i].x+=this.vel*this.dirX;
 
       if (this.enemies[i].x >= this.ctx.canvas.width) {
         this.enemies[i].x = 0-this.width;

@@ -11,7 +11,7 @@ class Player {
     this.posY=305;
     this.vel = 4;
     this.shots=[];
-    this.shotVel = 9;
+    this.shotVel = 7;
     this.shotInterval = 40;
     this.shotCountdown = 0;
     this.keepShooting = false;
@@ -19,24 +19,30 @@ class Player {
 
   manage() {
     window.addEventListener('keydown', (keyboard) => {
-      if (keyboard.keyCode === 37) {
+      if (keyboard.keyCode === 37 && !isResetting) {
         this.controls.left = true;
-      } else if (keyboard.keyCode === 39) {
+      } else if (keyboard.keyCode === 39 && !isResetting) {
         this.controls.right = true;
-      } else if (keyboard.keyCode === 32) {
+      } else if (keyboard.keyCode === 32 && !isResetting) {
         this.keepShooting = true;
       }
     })
 
     window.addEventListener('keyup', (keyboard) => {
-      if (keyboard.keyCode === 37) {
+      if (keyboard.keyCode === 37 && !isResetting) {
         this.controls.left = false;
-      } else if (keyboard.keyCode === 39) {
+      } else if (keyboard.keyCode === 39 && !isResetting) {
         this.controls.right = false;
-      } else if (keyboard.keyCode === 32) {
+      } else if (keyboard.keyCode === 32 && !isResetting) {
         this.keepShooting = false;
       }
     })
+
+    if (isResetting) {
+      this.controls.left = false;
+      this.controls.right = false;
+      this.keepShooting = false;
+    } 
 
     if (this.controls.left) {
       if(this.posX > 10) 
@@ -105,9 +111,7 @@ class Player {
         (actualEnemy.shots[i].y[1]>=this.posY&&actualEnemy.shots[i].y[1]<=this.posY+this.height)&&
         (actualEnemy.shots[i].x>=this.posX&&actualEnemy.shots[i].x<=this.posX+this.width)         
       ) {
-        if (playerLifes >= 0) {
-          playerLifes--;
-        }
+        timer = 320;
         setTimeout(() => {
           actualEnemy.shots.splice(i,1);
           actualEnemy.reset();
@@ -129,10 +133,9 @@ class Player {
           (actualEnemy.enemies[i].x+actualEnemy.width>=this.posX&&actualEnemy.enemies[i].x+actualEnemy.width<=this.posX+this.width)
         )
       ) {
-        if (playerLifes >= 0) {
-          playerLifes--;
-          actualEnemy.reset();
-        }
+        timer = 320;
+        actualEnemy.shots.splice(i,1);
+        actualEnemy.reset();
         setTimeout(() => {
           this.posX=this.inicialPosX;
         }, 10)

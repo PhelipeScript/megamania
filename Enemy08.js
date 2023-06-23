@@ -8,7 +8,7 @@ class Enemy08 {
     this.height=30;
     this.enemies=[];
     this.enemiesCreated=false;
-    this.vel=2;
+    this.vel=3;
     this.shots=[];
    }
 
@@ -31,7 +31,8 @@ class Enemy08 {
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
 
-      this.enemies[i].y+=this.vel;
+      if(!isResetting)
+        this.enemies[i].y+=this.vel;
 
       if (this.enemies[i].y >= 350) {
         this.enemies[i].y = -130;
