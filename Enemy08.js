@@ -31,21 +31,22 @@ class Enemy08 {
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
 
-      if(!isResetting)
+      if(!isResetting && !paused)
         this.enemies[i].y+=this.vel;
 
       if (this.enemies[i].y >= 350) {
         this.enemies[i].y = -130;
         
-        if (counter===1) {
+        if (counter===1 && !paused) {
           this.enemies[i].x = random;
-        } else if (counter===2) {
+        } else if (counter===2 && !paused) {
           this.enemies[i].x = random+140;
-        } else if (counter===3) {
+        } else if (counter===3 && !paused) {
           this.enemies[i].x = random+280;
         }
-        counter++;
-        if (counter===4) {
+        if (!paused)
+          counter++;
+        if (counter===4 && !paused) {
           random =  Math.random()*this.ctx.canvas.width+1;
           counter=1;
         }

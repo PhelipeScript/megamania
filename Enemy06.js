@@ -33,7 +33,7 @@ class Enemy06 {
   }
 
   showEnemies() {
-    if (this.dirXInterval.current<=this.dirXInterval.max&&!this.stopMovX&&!isResetting) {
+    if (this.dirXInterval.current<=this.dirXInterval.max&&!this.stopMovX&&!isResetting&&!paused) {
       this.dirXInterval.current++;
     } else if (this.dirXInterval.current>this.dirXInterval.max) {
       this.dirXInterval.current=0;
@@ -43,11 +43,11 @@ class Enemy06 {
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
       
-      if (!this.stopMovX&&!isResetting) {
+      if (!this.stopMovX&&!isResetting&&!paused) {
         this.enemies[i].x+=this.velX*this.dirX;
       }
       
-      if (!this.stopMovY&&!isResetting) {
+      if (!this.stopMovY&&!isResetting&&!paused) {
         this.enemies[i].y+=this.velY;
       }
 
@@ -76,7 +76,7 @@ class Enemy06 {
     if(this.shotCount===0) {
       this.createShot();
       this.shotCount = this.shotInterval;
-    } else {
+    } else if (!paused) {
       this.shotCount--;
     }
 
@@ -88,8 +88,10 @@ class Enemy06 {
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
       this.ctx.stroke();
 
-      this.shots[i].y[0]+=this.shotVel;
-      this.shots[i].y[1]+=this.shotVel;
+      if (!paused) {
+        this.shots[i].y[0]+=this.shotVel;
+        this.shots[i].y[1]+=this.shotVel;
+      }
 
       if (this.shots[i].y[1] >= 370) {
         this.shots.splice(i, 1);
@@ -113,12 +115,14 @@ class Enemy06 {
   manage() {
     let randomTimer = Math.floor(Math.random()*1700+2000);
     setTimeout(() => {
-      this.stopMovY = !this.stopMovY;
+      if (!paused)
+        this.stopMovY = !this.stopMovY;
     }, randomTimer)
 
     randomTimer = Math.floor(Math.random()*2500+500);
     setTimeout(() => {
-      this.stopMovX = !this.stopMovX;
+      if (!paused)
+        this.stopMovX = !this.stopMovX;
     }, randomTimer)
 
     randomTimer = Math.floor(Math.random()*2000+2000);

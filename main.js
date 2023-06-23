@@ -29,9 +29,11 @@ let skinSelected = playerSkins.blue;
 let score = 0;
 let playerLifes = 3;
 let timer = 0;
-let currentStage = 7;
+let currentStage = 0;
 let actualEnemy = enemies[currentStage];
 let isResetting=false;
+let gameOver=false;
+let paused = false;
 
 const player = new Player(ctx,skinSelected,controls,actualEnemy);
 
@@ -39,30 +41,35 @@ function Game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.canvas.style.background = '#000';
 
-  player.draw();
-  
-  actualEnemy.draw();
-  if (actualEnemy.enemies.length === 0) {
-    currentStage++;
-    actualEnemy = enemies[currentStage];
-    timer = 0;
+  if (!gameOver) {
+    player.draw();
+    actualEnemy.draw();
   }
-
   gameStatus.draw();
   gameStatus.showLifes(playerLifes);
   gameStatus.showScore(score);
   gameStatus.energy(timer);
 
-  if (timer===320) {
+  if (timer===320&&!gameOver) {
     actualEnemy.shots=[];
-    if (playerLifes >= 0) {
+    if (playerLifes > 0) {
       playerLifes--;
       isResetting=true;
       resetting();
+    } else {
+      gameOver=true
     }
-  } else if(timer < 320 && !isResetting) {
+  } else if(timer < 320 && !isResetting && !gameOver && !paused) {
     timer += 0.08;
   } 
+
+  if (actualEnemy.enemies.length === 0 && !gameOver) {
+    isResetting=true;
+    actualEnemy.shots=[];
+    nextStage();
+    currentStage++;
+    actualEnemy = enemies[currentStage];
+  }
 
   requestAnimationFrame(Game);
 }
@@ -75,6 +82,20 @@ function resetting() {
     }, 5)
   } else {
     isResetting=false;
+  }
+}
+
+function nextStage() {
+  if (timer<=320) {
+    setTimeout(()=> {
+      timer+=3;
+      score+=15;
+      nextStage();
+    }, 25)
+  } else {
+    setTimeout(() => {
+      resetting();
+    }, 200)
   }
 }
 

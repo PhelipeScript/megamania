@@ -31,7 +31,7 @@ class Enemy07 {
   }
 
   showEnemies() {
-    if (this.dirYInterval.current<=this.dirYInterval.max&&!this.stopMovX) {
+    if (this.dirYInterval.current<=this.dirYInterval.max&&!this.stopMovX&&!paused) {
       this.dirYInterval.current++;
     } else if (this.dirYInterval.current>this.dirYInterval.max) {
       this.dirYInterval.current=0;
@@ -41,18 +41,15 @@ class Enemy07 {
     for (let i = 0; i < this.enemies.length; i++) {
       this.ctx.drawImage(this.enemy,this.enemies[i].x,this.enemies[i].y,this.width,this.height);
       
-      this.enemies[i].y += this.velY*this.dirY;
+      if (!paused)
+        this.enemies[i].y += this.velY*this.dirY;
 
       if (this.enemies[i].x >= this.ctx.canvas.width) {
         this.enemies[i].x = -10;
-      } else if(!isResetting) {
+      } else if(!isResetting && !paused) {
         this.enemies[i].x+=this.velX;
       }
 
-      // if (this.enemies[i].y >= 250 || this.enemies[i].y <= 30) {
-      //   this.dirY *= -1;
-      // }
-      
     }
   }
 
@@ -75,7 +72,7 @@ class Enemy07 {
     if(this.shotCount===0) {
       this.createShot();
       this.shotCount = this.shotInterval;
-    } else {
+    } else if (!paused) {
       this.shotCount--;
     }
 
@@ -87,8 +84,10 @@ class Enemy07 {
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
       this.ctx.stroke();
 
-      this.shots[i].y[0]+=this.shotVel;
-      this.shots[i].y[1]+=this.shotVel;
+      if (!paused) {
+        this.shots[i].y[0]+=this.shotVel;
+        this.shots[i].y[1]+=this.shotVel;
+      }
 
       if (this.shots[i].y[1] >= 370) {
         this.shots.splice(i, 1);

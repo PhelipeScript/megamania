@@ -33,7 +33,7 @@ class Enemy03 {
       
       if (this.enemies[i].x >= this.ctx.canvas.width) {
         this.enemies[i].x = -10;
-      } else if (!isResetting) {
+      } else if (!isResetting && !paused) {
         this.enemies[i].x+=this.vel;
       }
     }
@@ -58,7 +58,7 @@ class Enemy03 {
     if(this.shotCount===0) {
       this.createShot();
       this.shotCount = this.shotInterval;
-    } else {
+    } else if (!paused) {
       this.shotCount--;
     }
 
@@ -70,8 +70,10 @@ class Enemy03 {
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
       this.ctx.stroke();
 
-      this.shots[i].y[0]+=this.shotVel;
-      this.shots[i].y[1]+=this.shotVel;
+      if (!paused) {
+        this.shots[i].y[0]+=this.shotVel;
+        this.shots[i].y[1]+=this.shotVel;
+      }
 
       if (this.shots[i].y[1] >= 370) {
         this.shots.splice(i, 1);

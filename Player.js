@@ -18,22 +18,28 @@ class Player {
   }
 
   manage() {
-    window.addEventListener('keydown', (keyboard) => {
-      if (keyboard.keyCode === 37 && !isResetting) {
-        this.controls.left = true;
-      } else if (keyboard.keyCode === 39 && !isResetting) {
-        this.controls.right = true;
-      } else if (keyboard.keyCode === 32 && !isResetting) {
-        this.keepShooting = true;
+    window.addEventListener('keypress', (keyboard) => {
+      if (keyboard.keyCode === 112 && !isResetting) {
+        paused = !paused;
       }
     })
 
+    window.addEventListener('keydown', (keyboard) => {
+      if (keyboard.keyCode === 37 && !isResetting && !paused) {
+        this.controls.left = true;
+      } else if (keyboard.keyCode === 39 && !isResetting && !paused) {
+        this.controls.right = true;
+      } else if (keyboard.keyCode === 32 && !isResetting && !paused) {
+        this.keepShooting = true;
+      } 
+    })
+
     window.addEventListener('keyup', (keyboard) => {
-      if (keyboard.keyCode === 37 && !isResetting) {
+      if (keyboard.keyCode === 37) {
         this.controls.left = false;
-      } else if (keyboard.keyCode === 39 && !isResetting) {
+      } else if (keyboard.keyCode === 39) {
         this.controls.right = false;
-      } else if (keyboard.keyCode === 32 && !isResetting) {
+      } else if (keyboard.keyCode === 32) {
         this.keepShooting = false;
       }
     })
@@ -78,8 +84,10 @@ class Player {
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
       this.ctx.stroke();
 
-      this.shots[i].y[0]-=this.shotVel;
-      this.shots[i].y[1]-=this.shotVel;
+      if (!paused) {
+        this.shots[i].y[0]-=this.shotVel;
+        this.shots[i].y[1]-=this.shotVel;
+      }
 
       if (this.shots[i].y[1] <= 0) {
         this.shots.shift();
