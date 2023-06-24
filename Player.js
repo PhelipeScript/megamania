@@ -25,21 +25,21 @@ class Player {
     })
 
     window.addEventListener('keydown', (keyboard) => {
-      if (keyboard.keyCode === 37 && !isResetting && !paused) {
+      if (keyboard.keyCode === 37 && !this.controls.left && !isResetting && !paused) {
         this.controls.left = true;
-      } else if (keyboard.keyCode === 39 && !isResetting && !paused) {
+      } else if (keyboard.keyCode === 39 && !this.controls.right && !isResetting && !paused) {
         this.controls.right = true;
-      } else if (keyboard.keyCode === 32 && !isResetting && !paused) {
+      } else if (keyboard.keyCode === 32 && !this.keepShooting && !isResetting && !paused) {
         this.keepShooting = true;
       } 
     })
 
     window.addEventListener('keyup', (keyboard) => {
-      if (keyboard.keyCode === 37) {
+      if (keyboard.keyCode === 37 && this.controls.left) {
         this.controls.left = false;
-      } else if (keyboard.keyCode === 39) {
+      } else if (keyboard.keyCode === 39 && this.controls.right) {
         this.controls.right = false;
-      } else if (keyboard.keyCode === 32) {
+      } else if (keyboard.keyCode === 32 && this.keepShooting) {
         this.keepShooting = false;
       }
     })

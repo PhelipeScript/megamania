@@ -35,11 +35,20 @@ let isResetting=false;
 let gameOver=false;
 let paused = false;
 
+let scoreFlag=10000;
+
 const player = new Player(ctx,skinSelected,controls,actualEnemy);
 
 function Game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.canvas.style.background = '#000';
+
+  if (score >= scoreFlag) {
+    if (playerLifes<6) {
+      playerLifes++;
+    }
+    scoreFlag+=10000;
+  }
 
   if (!gameOver) {
     player.draw();
@@ -66,8 +75,14 @@ function Game() {
   if (actualEnemy.enemies.length === 0 && !gameOver) {
     isResetting=true;
     actualEnemy.shots=[];
+    player.shots=[];
+    actualEnemy.enemiesCreated=false;
     nextStage();
-    currentStage++;
+    if (currentStage < 7) {
+      currentStage++;
+    } else {
+      currentStage=0;
+    }
     actualEnemy = enemies[currentStage];
   }
 
@@ -89,7 +104,7 @@ function nextStage() {
   if (timer<=320) {
     setTimeout(()=> {
       timer+=3;
-      score+=15;
+      score+=16;
       nextStage();
     }, 25)
   } else {
