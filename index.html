@@ -19,13 +19,54 @@
   <script src="Enemy07.js"></script>
   <script src="Enemy08.js"></script>
 </head>
-<body onload="Game()">
+<body>
 
-  <div class="game">
-    <canvas onclick="fullscreen()" id="canvas" width="640" height="446">
+  <main class="game">
+    <div class="menu">
+      <img src="assets/menu.png" alt="">
+      <button onclick="play()" class="play">
+        play
+      </button>
+      <button onclick="chooseSkin()" class="skins">
+        skins
+      </button>
+    </div>
+
+    <canvas id="canvas" width="640" height="446">
       <h3>Seu navegador não tem suporte para esse jogo.</h3>
     </canvas>
-  </div>
+
+    <div class="all-skins sumir">
+      <p onclick="backToMenu()">voltar</p>
+      <h2>Skins</h2>
+      <div class="skin selected" data-color="blue">
+        <img src="assets/player_blue.png" alt="skin blue">
+      </div>
+      <div class="skin" data-color="green">
+        <img src="assets/player_green.png" alt="skin green">
+      </div>
+      <div class="skin" data-color="magenta">
+        <img src="assets/player_magenta.png" alt="skin magenta">
+      </div>
+      <div class="skin" data-color="purple">
+        <img src="assets/player_purple.png" alt="skin purple">
+      </div>
+      <div class="skin" data-color="red">
+        <img src="assets/player_red.png" alt="skin red">
+      </div>
+      <div class="skin" data-color="white">
+        <img src="assets/player_white.png" alt="skin white">
+      </div>
+      <div class="skin" data-color="yellow">
+        <img src="assets/player_yellow.png" alt="skin yellow">
+      </div>
+    </div>
+
+    <button class="fullscreen" onclick="fullscreen()">
+      Fullscreen
+      <img src="assets/fullscreen-icon.svg" alt="Fullscreen">
+    </button>
+  </main>
 
   <script src="main.js"></script>
 </body>

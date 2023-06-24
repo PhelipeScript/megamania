@@ -1,10 +1,129 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .game {
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 700px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.game > button {
+  all: unset;
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
 #canvas {
-  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+}
+
+.menu {
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.menu.sumir, .all-skins.sumir {
+  display: none;
+}
+
+.menu > img {
+  width: 100%;
+  height: 100%;
+}
+
+.menu > button {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 200px;
+  height: 58px;
+  background: #00F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P';
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #FFF; 
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s linear;
+}
+
+.menu > button:hover {
+  background: #00008B;
+}
+
+.menu .skins {
+  margin-top: 100px;
+}
+
+.all-skins {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  color: white;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 100px;
+}
+
+.all-skins > h2 {
+  position: absolute;
+  top: 20px;
+  background: #00F;
+  padding: 20px 40px;
+  text-transform: uppercase;
+  font-family: 'Press Start 2P';
+}
+
+.all-skins > p {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  font-family: 'Press Start 2P';
+}
+
+.all-skins > p:hover {
+  text-decoration: underline;
+}
+
+.skin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c7e3e13a;
+  width: 110px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.skin.selected {
+  box-shadow: 0 0 0 2px #F00;
 }

@@ -33,11 +33,11 @@ let currentStage = 0;
 let actualEnemy = enemies[currentStage];
 let isResetting=false;
 let gameOver=false;
-let paused = false;
+let paused = true;
 
 let scoreFlag=10000;
 
-const player = new Player(ctx,skinSelected,controls,actualEnemy);
+let player;
 
 function Game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -115,10 +115,48 @@ function nextStage() {
 }
 
 function fullscreen(){
-  if(canvas.webkitRequestFullScreen) {
-      canvas.webkitRequestFullScreen();
+  const game = document.querySelector('.game');
+  if(game.webkitRequestFullScreen) {
+      game.webkitRequestFullScreen();
   }
  else {
-    canvas.mozRequestFullScreen();
+    game.mozRequestFullScreen();
  }            
+}
+
+function play() {
+  const menu = document.querySelector('.menu');
+  menu.classList.add('sumir')
+  player = new Player(ctx,skinSelected,controls,actualEnemy)
+  Game();
+  paused=false;
+}
+
+function chooseSkin() {
+  const skinsScreen = document.querySelector('.all-skins');
+  const menuScreen = document.querySelector('.menu');
+
+  skinsScreen.classList.remove('sumir');
+  menuScreen.classList.add('sumir');
+}
+
+function backToMenu() {
+  const skinsScreen = document.querySelector('.all-skins');
+  const menuScreen = document.querySelector('.menu');
+
+  skinsScreen.classList.add('sumir');
+  menuScreen.classList.remove('sumir');
+}
+
+const allSkins = document.querySelectorAll('.skin');
+
+for (let i = 0; i < allSkins.length; i++) {
+  allSkins[i].addEventListener('click', () => {
+    for (let i = 0; i < allSkins.length; i++) {
+      allSkins[i].classList.remove('selected');
+    }
+    allSkins[i].classList.add('selected');
+
+    skinSelected = playerSkins[allSkins[i].dataset.color];
+  });
 }

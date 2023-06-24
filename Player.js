@@ -31,7 +31,7 @@ class Player {
         this.controls.right = true;
       } else if (keyboard.keyCode === 32 && !this.keepShooting && !isResetting && !paused) {
         this.keepShooting = true;
-      } 
+      }  
     })
 
     window.addEventListener('keyup', (keyboard) => {
