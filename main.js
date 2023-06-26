@@ -59,7 +59,7 @@ function Game() {
   gameStatus.showScore(score);
   gameStatus.energy(timer);
 
-  if (timer===320&&!gameOver) {
+  if (timer===320&&!gameOver&&!isResetting) {
     actualEnemy.shots=[];
     if (playerLifes > 0) {
       playerLifes--;

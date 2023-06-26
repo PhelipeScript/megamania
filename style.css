@@ -42,21 +42,26 @@
   opacity: 0;
 }
 
-@media (min-width: 900px){
+/* @media (min-width: 900px){
   .control-group {
     display: none;
   }
-}
+} */
 
 .control-group > div {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 80px;
 }
 
 .control-group img {
   width: 40px;
   height: 40px;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none
 }
 
 #canvas {
