@@ -26,6 +26,39 @@
   cursor: pointer;
 }
 
+.control-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10%;
+  position: absolute;
+  bottom: 7%;
+  z-index: 2;
+  opacity: 1;
+}
+
+.control-group.disappear {
+  opacity: 0;
+}
+
+@media (min-width: 900px){
+  .control-group {
+    display: none;
+  }
+}
+
+.control-group > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.control-group img {
+  width: 40px;
+  height: 40px;
+}
+
 #canvas {
   width: 100%;
   height: 100%;

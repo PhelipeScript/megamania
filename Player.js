@@ -18,6 +18,46 @@ class Player {
   }
 
   manage() {
+    const controlLeft = document.querySelector('#control-left');
+    const controlRight = document.querySelector('#control-right');
+    const controlShot = document.querySelector('#control-shot');
+
+    controlShot.addEventListener('touchstart', () => {
+      if (!this.keepShooting && !isResetting && !paused) {
+        this.keepShooting = true;
+      }
+    })
+
+    controlShot.addEventListener('touchend', () => {
+      if (this.keepShooting) {
+        this.keepShooting = false;
+      }
+    })
+
+    controlLeft.addEventListener('touchstart', () => {
+      if (!this.controls.left && !isResetting && !paused) {
+        this.controls.left = true;
+      }
+    })
+
+    controlLeft.addEventListener('touchend', () => {
+      if (this.controls.left) {
+        this.controls.left = false;
+      }
+    })
+
+    controlRight.addEventListener('touchstart', () => {
+      if (!this.controls.right && !isResetting && !paused) {
+        this.controls.right = true;
+      }
+    })
+
+    controlRight.addEventListener('touchend', () => {
+      if (this.controls.right) {
+        this.controls.right = false;
+      }
+    })
+
     window.addEventListener('keypress', (keyboard) => {
       if (keyboard.keyCode === 112 && !isResetting) {
         paused = !paused;

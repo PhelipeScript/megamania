@@ -125,6 +125,9 @@ function fullscreen(){
 }
 
 function play() {
+  const controlGroup = document.querySelector('.control-group');
+  controlGroup.classList.remove('disappear');
+
   const menu = document.querySelector('.menu');
   menu.classList.add('sumir')
   player = new Player(ctx,skinSelected,controls,actualEnemy)
