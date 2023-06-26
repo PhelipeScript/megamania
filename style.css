@@ -42,11 +42,11 @@
   opacity: 0;
 }
 
-/* @media (min-width: 900px){
+@media (min-width: 900px){
   .control-group {
     display: none;
   }
-} */
+}
 
 .control-group > div {
   display: flex;
