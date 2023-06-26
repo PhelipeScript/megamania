@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="GameStatus.js"></script>
   <script src="Player.js"></script>
+  <script src="Enemy.js"></script>
   <script src="Enemy01.js"></script>
   <script src="Enemy02.js"></script>
   <script src="Enemy03.js"></script>
@@ -38,10 +39,16 @@
 
     <div class="control-group disappear">
       <div>
-        <img id="control-left" src="assets/left-button.svg" alt="go to left">
-        <img id="control-right" src="assets/right-button.svg" alt="go to right">
+        <button id="control-left">
+          <img src="assets/left-button.svg" alt="go to left">
+        </button>
+        <button id="control-right">
+          <img src="assets/right-button.svg" alt="go to right">
+        </button>
       </div>
-      <img id="control-shot" src="assets/target-button.svg" alt="shot">
+      <button id="control-shot">
+        <img src="assets/target-button.svg" alt="shot">
+      </button>
     </div>
 
     <div class="all-skins sumir">
