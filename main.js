@@ -76,6 +76,7 @@ function Game() {
     isResetting=true;
     actualEnemy.shots=[];
     player.shots=[];
+    actualEnemy.enemyValue=90;
     actualEnemy.enemiesCreated=false;
     nextStage();
     if (currentStage < 7) {
@@ -104,10 +105,11 @@ function nextStage() {
   if (timer<=320) {
     setTimeout(()=> {
       timer+=3;
-      score+=16;
+      score+=13;
       nextStage();
     }, 25)
   } else {
+    score+=300;
     setTimeout(() => {
       resetting();
     }, 200)

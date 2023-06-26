@@ -1,29 +1,22 @@
-class Enemy06 {
+class Enemy06 extends Enemy02{
   constructor(ctx) {
+    super();
     this.ctx=ctx;
-    this.enemyValue=20;
-    this.enemy=new Image();
+    this.enemyValue=70;
     this.enemy.src = 'assets/enemy06.png';
-    this.width=40;
+    this.width=35;
     this.height=20;
-    this.enemies=[];
-    this.enemiesCreated=false;
     this.stopMovX=false;
     this.stopMovY=true;
     this.velY=1.2;
     this.velX=3.5;
-    this.dirX=1;
     this.dirXInterval= {current:0,max:50};
-    this.shots=[];
-    this.shotVel=4;
-    this.shotInterval=150;
-    this.shotCount=0;
    }
 
    createEnemies(x, y) {
     this.enemies.push({x: x,y: y,});
-    this.enemies.push({x: x+170,y: y,});
-    this.enemies.push({x: x+340,y: y,});
+    this.enemies.push({x: x+150,y: y,});
+    this.enemies.push({x: x+300,y: y,});
 
     if (this.enemies.length < 18) {
       this.createEnemies(x, y-80);
@@ -56,61 +49,6 @@ class Enemy06 {
       }
     }
   }
-
-  createShot() {
-    let amount = this.enemies.length>=4 ? 2 : 1;
-    for (let i = 1; i <= amount; i++) {
-      let random = Math.floor(Math.random()*this.enemies.length);
-      setTimeout(() => {
-        if (this.enemies[random]&&this.enemies[random].y>=-50&&this.enemies[random].y<=280) {
-          this.shots.push({
-            x:this.enemies[random].x+this.width/2,
-            y: [this.enemies[random].y+20, this.enemies[random].y+40]
-          })
-        }
-      }, i*300)
-    }
-  }
-
-  showShots() {
-    if(this.shotCount===0) {
-      this.createShot();
-      this.shotCount = this.shotInterval;
-    } else if (!paused) {
-      this.shotCount--;
-    }
-
-    for (let i = 0; i < this.shots.length; i++) {
-      this.ctx.beginPath();
-      this.ctx.strokeStyle = '#F00';
-      this.ctx.lineWidth = 2;
-      this.ctx.moveTo(this.shots[i].x, this.shots[i].y[0]);
-      this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
-      this.ctx.stroke();
-
-      if (!paused) {
-        this.shots[i].y[0]+=this.shotVel;
-        this.shots[i].y[1]+=this.shotVel;
-      }
-
-      if (this.shots[i].y[1] >= 370) {
-        this.shots.splice(i, 1);
-      }
-    }
-  }
-
-  reset() {
-    let enemyFurtherDown = -1;
-
-    for (let i = this.enemies.length-1; i >= 0; i--) {
-      if (this.enemies[i].y > enemyFurtherDown) 
-        enemyFurtherDown=this.enemies[i].y;
-    }
-
-    for (let i = this.enemies.length-1; i >= 0; i--) {
-      this.enemies[i].y += enemyFurtherDown <= 100 ? -170 : -enemyFurtherDown*1.35; 
-    }
-  } 
 
   manage() {
     let randomTimer = Math.floor(Math.random()*1700+2000);

@@ -64,7 +64,7 @@ class Enemy01 {
 
     for (let i = 0; i < this.shots.length; i++) {
       this.ctx.beginPath();
-      this.ctx.strokeStyle = '#F00';
+      this.ctx.strokeStyle = '#00F';
       this.ctx.lineWidth = 2;
       this.ctx.moveTo(this.shots[i].x, this.shots[i].y[0]);
       this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);

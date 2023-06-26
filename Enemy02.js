@@ -1,21 +1,14 @@
-class Enemy02 {
+class Enemy02 extends Enemy01 {
   constructor(ctx) {
+    super();
     this.ctx=ctx;
     this.enemyValue=30;
-    this.enemy=new Image();
     this.enemy.src='assets/enemy02.png';
-    this.width=35;
-    this.height=20;
-    this.enemies=[];
-    this.enemiesCreated=false;
     this.dirX=1;
     this.vel=3.5;
     this.interval=170;
     this.countdown=this.interval;
-    this.shots=[];
-    this.shotVel=4;
     this.shotInterval=100;
-    this.shotCount=0;
   }
 
   createEnemies(x, y, lastRandom) {
@@ -73,7 +66,7 @@ class Enemy02 {
   }
 
   createShot() {
-    let amount = this.enemies.length>=3 ? 3 : 1;
+    let amount = this.enemies.length>=4 ? 2 : 1;
     for (let i = 1; i <= amount; i++) {
       let random = Math.floor(Math.random()*this.enemies.length);
       setTimeout(() => {
@@ -87,33 +80,6 @@ class Enemy02 {
     }
   }
 
-  showShots() {
-    if(this.shotCount===0) {
-      this.createShot();
-      this.shotCount = this.shotInterval;
-    } else if (!paused) {
-      this.shotCount--;
-    }
-
-    for (let i = 0; i < this.shots.length; i++) {
-      this.ctx.beginPath();
-      this.ctx.strokeStyle = '#F00';
-      this.ctx.lineWidth = 2;
-      this.ctx.moveTo(this.shots[i].x, this.shots[i].y[0]);
-      this.ctx.lineTo(this.shots[i].x, this.shots[i].y[1]);
-      this.ctx.stroke();
-
-      if (!paused) {
-        this.shots[i].y[0]+=this.shotVel;
-        this.shots[i].y[1]+=this.shotVel;
-      }
-
-      if (this.shots[i].y[1] >= 440) {
-        this.shots.splice(i, 1);
-      }
-    }
-  }
-
   reset() {
     let enemyFurtherDown = -1;
 
@@ -123,7 +89,7 @@ class Enemy02 {
     }
 
     for (let i = this.enemies.length-1; i >= 0; i--) {
-      this.enemies[i].y += enemyFurtherDown <= 100 ? -100 : -enemyFurtherDown*1.25; 
+      this.enemies[i].y += enemyFurtherDown <= 100 ? -140 : -enemyFurtherDown*1.25; 
     }
   } 
 
@@ -132,7 +98,6 @@ class Enemy02 {
       this.createEnemies(40, -30);
     }
     this.showEnemies();
-    this.showShots();
-    
+    super.showShots();
   }
 }

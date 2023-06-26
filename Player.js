@@ -23,7 +23,10 @@ class Player {
     const controlShot = document.querySelector('#control-shot');
 
     controlShot.addEventListener('touchstart', () => {
-      if (!this.keepShooting && !isResetting && !paused) {
+      if (isResetting || paused) 
+        return;
+
+      if (!this.keepShooting) {
         this.keepShooting = true;
       }
     })
@@ -35,7 +38,10 @@ class Player {
     })
 
     controlLeft.addEventListener('touchstart', () => {
-      if (!this.controls.left && !isResetting && !paused) {
+      if (isResetting || paused) 
+        return;
+
+      if (!this.controls.left) {
         this.controls.left = true;
       }
     })
@@ -47,7 +53,10 @@ class Player {
     })
 
     controlRight.addEventListener('touchstart', () => {
-      if (!this.controls.right && !isResetting && !paused) {
+      if (isResetting || paused) 
+        return;
+
+      if (!this.controls.right) {
         this.controls.right = true;
       }
     })
@@ -65,11 +74,15 @@ class Player {
     })
 
     window.addEventListener('keydown', (keyboard) => {
-      if (keyboard.keyCode === 37 && !this.controls.left && !isResetting && !paused) {
+      if (isResetting || paused) {
+        return;
+      }
+
+      if (keyboard.keyCode === 37 && !this.controls.left) {
         this.controls.left = true;
-      } else if (keyboard.keyCode === 39 && !this.controls.right && !isResetting && !paused) {
+      } else if (keyboard.keyCode === 39 && !this.controls.right) {
         this.controls.right = true;
-      } else if (keyboard.keyCode === 32 && !this.keepShooting && !isResetting && !paused) {
+      } else if (keyboard.keyCode === 32 && !this.keepShooting) {
         this.keepShooting = true;
       }  
     })
@@ -84,7 +97,7 @@ class Player {
       }
     })
 
-    if (isResetting) {
+    if (isResetting && (this.controls.left || this.controls.right || this.keepShooting)) {
       this.controls.left = false;
       this.controls.right = false;
       this.keepShooting = false;

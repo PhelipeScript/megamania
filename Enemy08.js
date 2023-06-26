@@ -1,15 +1,12 @@
-class Enemy08 {
+class Enemy08 extends Enemy06{
   constructor(ctx) {
+    super();
     this.ctx=ctx;
-    this.enemyValue=20;
-    this.enemy=new Image();
+    this.enemyValue=90;
     this.enemy.src = 'assets/enemy08.png';
     this.width=35;
     this.height=30;
-    this.enemies=[];
-    this.enemiesCreated=false;
     this.vel=3;
-    this.shots=[];
    }
 
    createEnemies(x, y) {
@@ -61,19 +58,6 @@ class Enemy08 {
   showShots() {
     
   }
-
-  reset() {
-    let enemyFurtherDown = -1;
-
-    for (let i = this.enemies.length-1; i >= 0; i--) {
-      if (this.enemies[i].y > enemyFurtherDown) 
-        enemyFurtherDown=this.enemies[i].y;
-    }
-
-    for (let i = this.enemies.length-1; i >= 0; i--) {
-      this.enemies[i].y += enemyFurtherDown <= 100 ? -170 : -enemyFurtherDown*1.35; 
-    }
-  } 
 
   draw() {
     if(!this.enemiesCreated) {
